@@ -1,0 +1,29 @@
+[33mcommit 5127603684f57a4314bf2b515cd09c32a710ff52[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Leonardo Anschau <leonardoanschau@gmail.com>
+Date:   Mon Mar 19 18:04:24 2018 -0300
+
+    Criando repository e service para Categoria
+
+[33mcommit dc0b000c847b92a5182716b4a1ad383f6c22ff05[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Leonardo Anschau <leonardoanschau@gmail.com>
+Date:   Mon Mar 19 17:36:52 2018 -0300
+
+    Banco de dados H2 e criação automatica da base de dados
+
+[33mcommit be916d105dbc97259084d8cabe2ef382fa10c0a7[m
+Author: Leonardo Anschau <leonardoanschau@gmail.com>
+Date:   Mon Mar 19 17:08:03 2018 -0300
+
+    Testando a primeira classe de dominio - Categoria
+
+[33mcommit cf18427fc30663521539df8454b257fcf821080e[m
+Author: Leonardo Anschau <leonardoanschau@gmail.com>
+Date:   Mon Mar 19 16:51:40 2018 -0300
+
+    REST Testado
+
+[33mcommit 9167e084bde49927e12032a15e73256e337f6bf4[m
+Author: Leonardo Anschau <leonardoanschau@gmail.com>
+Date:   Mon Mar 19 16:30:21 2018 -0300
+
+    Projeto Criado
