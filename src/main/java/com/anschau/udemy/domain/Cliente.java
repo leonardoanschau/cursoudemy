@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.anschau.udemy.domain.enums.TipoCliente;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -33,6 +32,8 @@ public class Cliente implements Serializable{
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	private Set<String> telefones = new HashSet<>();
+	
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente() {
 		
@@ -132,6 +133,15 @@ public class Cliente implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@OneToMany(mappedBy="cliente")
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 	
 	
