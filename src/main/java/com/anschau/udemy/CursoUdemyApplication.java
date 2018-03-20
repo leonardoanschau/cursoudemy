@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.anschau.udemy.domain.Categoria;
 import com.anschau.udemy.domain.Cidade;
+import com.anschau.udemy.domain.Cliente;
+import com.anschau.udemy.domain.Endereco;
 import com.anschau.udemy.domain.Estado;
 import com.anschau.udemy.domain.Produto;
+import com.anschau.udemy.domain.enums.TipoCliente;
 import com.anschau.udemy.repositories.CategoriaRepository;
 import com.anschau.udemy.repositories.CidadeRepository;
+import com.anschau.udemy.repositories.ClienteRepository;
+import com.anschau.udemy.repositories.EnderecoRepository;
 import com.anschau.udemy.repositories.EstadoRepository;
 import com.anschau.udemy.repositories.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class CursoUdemyApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursoUdemyApplication.class, args);
@@ -59,11 +70,19 @@ public class CursoUdemyApplication implements CommandLineRunner{
 		Cidade cidade2 = new Cidade(null, "São Paulo", estado2);
 		Cidade cidade3 = new Cidade(null, "Campinas", estado2);
 		
+		Cliente cliente1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		cliente1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
+		
+		Endereco endereco1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38", cliente1, cidade1);
+		Endereco endereco2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cliente1, cidade2);
 		
 		cr.saveAll(Arrays.asList(cat1, cat2));
 		pr.saveAll(Arrays.asList(p1, p2, p3));
 		
 		estadoRepository.saveAll(Arrays.asList(estado1, estado2));
 		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
+		
+		clienteRepository.save(cliente1);
+		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
 	}
 }
