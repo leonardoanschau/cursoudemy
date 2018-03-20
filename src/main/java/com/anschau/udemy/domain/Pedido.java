@@ -2,6 +2,8 @@ package com.anschau.udemy.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
@@ -26,6 +29,20 @@ public class Pedido implements Serializable{
 	private Cliente cliente;
 	
 	private Endereco enderecoDeEntrega;
+	
+	private Set<ItemPedido> itens = new HashSet<>();
+	
+	public Pedido() {
+		
+	}
+
+	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
+		super();
+		this.id = id;
+		this.instante = instante;
+		this.cliente = cliente;
+		this.enderecoDeEntrega = enderecoDeEntrega;
+	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,17 +91,15 @@ public class Pedido implements Serializable{
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
-	public Pedido() {
-		
+	@OneToMany(mappedBy="id.pedido")
+	public Set<ItemPedido> getItens() {
+		return itens;
 	}
 
-	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
-		super();
-		this.id = id;
-		this.instante = instante;
-		this.cliente = cliente;
-		this.enderecoDeEntrega = enderecoDeEntrega;
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -110,6 +125,8 @@ public class Pedido implements Serializable{
 			return false;
 		return true;
 	}
+
+
 	
 	
 	
