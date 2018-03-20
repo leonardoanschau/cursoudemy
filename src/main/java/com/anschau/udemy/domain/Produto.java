@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable{
@@ -40,14 +41,20 @@ public class Produto implements Serializable{
 		this.preco = preco;
 	}
 	
-	/*public List<Pedido> getPedidos(){
+	
+	/*@JsonIgnore
+	 * OBS: Por causa do do "get" o java ou o spring n sei, tenta acessar, mas como mapeei 
+	 * os metodos getters e setters ao inves dos atributos com o JPA
+	 * ele fica dando erro pq nao acha uma metodo set para esse metodo, por enquanto não 
+	 * estou utilizando então vou deixar sem;
+	  public List<Pedido> getPedidos(){
 		List<Pedido> lista = new ArrayList<>();
 		for (ItemPedido itemPedidos : itens) {
 			lista.add(itemPedidos.getPedido());
 		}
 		return lista;
 	}*/
-
+	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getId() {
@@ -74,6 +81,7 @@ public class Produto implements Serializable{
 		this.preco = preco;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy="id.produto")
 	public Set<ItemPedido> getItens() {
 		return itens;

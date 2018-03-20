@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.anschau.udemy.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class PagamentoComBoleto extends Pagamento{
@@ -24,6 +25,7 @@ public class PagamentoComBoleto extends Pagamento{
 		this.setDataPagamento(dataPagamento);
 	}
 
+	@JsonFormat(pattern="dd/MM/yyyy")
 	public Date getDataVencimento() {
 		return dataVencimento;
 	}
@@ -32,6 +34,7 @@ public class PagamentoComBoleto extends Pagamento{
 		this.dataVencimento = dataVencimento;
 	}
 
+	@JsonFormat(pattern="dd/MM/yyyy")
 	public Date getDataPagamento() {
 		return dataPagamento;
 	}
