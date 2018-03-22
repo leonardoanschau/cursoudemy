@@ -2,7 +2,9 @@ package com.anschau.udemy.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.anschau.udemy.domain.Categoria;
 
@@ -12,7 +14,6 @@ public class CategoriaDTO implements Serializable{
 	
 	private Integer id;
 	private String nome;
-	private Categoria categoria;
 
 	public CategoriaDTO() {
 		
@@ -31,6 +32,8 @@ public class CategoriaDTO implements Serializable{
 		this.id = id;
 	}
 
+	@NotEmpty(message="Nome da Categoria é obrigatório.")
+	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 80 caracteres.")
 	public String getNome() {
 		return nome;
 	}
