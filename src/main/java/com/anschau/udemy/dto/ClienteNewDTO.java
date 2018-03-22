@@ -2,6 +2,14 @@ package com.anschau.udemy.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.anschau.udemy.services.validation.ClienteInsert;
+
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -46,6 +54,8 @@ public class ClienteNewDTO implements Serializable {
 		this.cidadeId = cidadeId;
 	}
 
+	@NotEmpty(message="Nome do cliente é obrigatório")
+	@Length(min=5, max=120, message="O tamanho deve ser entre {min} e {max} caracteres")
 	public String getNome() {
 		return nome;
 	}
@@ -54,6 +64,8 @@ public class ClienteNewDTO implements Serializable {
 		this.nome = nome;
 	}
 
+	@NotEmpty(message="E-mail do cliente é obrigatório")
+	@Email(message="E-mail inválido")
 	public String getEmail() {
 		return email;
 	}
@@ -62,6 +74,7 @@ public class ClienteNewDTO implements Serializable {
 		this.email = email;
 	}
 
+	@NotEmpty(message="Preenchimento é obrigatório")
 	public String getCpfOuCnpj() {
 		return cpfOuCnpj;
 	}
@@ -78,6 +91,7 @@ public class ClienteNewDTO implements Serializable {
 		this.tipo = tipo;
 	}
 
+	@NotEmpty(message="Preenchimento é obrigatório")
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -86,6 +100,7 @@ public class ClienteNewDTO implements Serializable {
 		this.logradouro = logradouro;
 	}
 
+	@NotEmpty(message="Preenchimento é obrigatório")
 	public String getNumero() {
 		return numero;
 	}
@@ -110,6 +125,7 @@ public class ClienteNewDTO implements Serializable {
 		this.bairro = bairro;
 	}
 
+	@NotEmpty(message="Preenchimento é obrigatório")
 	public String getCep() {
 		return cep;
 	}
@@ -118,6 +134,7 @@ public class ClienteNewDTO implements Serializable {
 		this.cep = cep;
 	}
 
+	@NotEmpty(message="Preenchimento é obrigatório")
 	public String getTelefone1() {
 		return telefone1;
 	}
