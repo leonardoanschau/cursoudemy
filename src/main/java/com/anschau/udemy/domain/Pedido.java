@@ -34,6 +34,8 @@ public class Pedido implements Serializable{
 	
 	private Set<ItemPedido> itens = new HashSet<>();
 	
+	private Double valorTotal;
+	
 	public Pedido() {
 		
 	}
@@ -44,6 +46,19 @@ public class Pedido implements Serializable{
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
+	}
+	
+	public Double getValorTotal() {
+		return valorTotal;
+	}
+
+	public void setValorTotal(Double valorTotal) {
+		Double soma = 0.0;
+		for(ItemPedido ip : itens) {
+			soma = soma + ip.getSubTotal();
+		}
+		valorTotal = soma;
+		this.valorTotal = valorTotal;
 	}
 	
 	@Id
@@ -130,6 +145,8 @@ public class Pedido implements Serializable{
 			return false;
 		return true;
 	}
+
+
 
 
 	
