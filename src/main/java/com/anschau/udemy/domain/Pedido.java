@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -34,8 +35,6 @@ public class Pedido implements Serializable{
 	
 	private Set<ItemPedido> itens = new HashSet<>();
 	
-	private Double valorTotal;
-	
 	public Pedido() {
 		
 	}
@@ -48,19 +47,16 @@ public class Pedido implements Serializable{
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 	
+	@Transient
 	public Double getValorTotal() {
-		return valorTotal;
-	}
-
-	public void setValorTotal(Double valorTotal) {
 		Double soma = 0.0;
 		for(ItemPedido ip : itens) {
 			soma = soma + ip.getSubTotal();
 		}
-		valorTotal = soma;
-		this.valorTotal = valorTotal;
+		Double valorTotal = soma;
+		return valorTotal;
 	}
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getId() {

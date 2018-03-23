@@ -1,5 +1,6 @@
 package com.anschau.udemy.domain;
 
+
 import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
@@ -18,8 +19,6 @@ public class ItemPedido implements Serializable{
 	private Double desconto;
 	private Integer quantidade;
 	private Double preco;
-	
-	private Double subTotal;
 
 	public ItemPedido() {
 		
@@ -32,6 +31,7 @@ public class ItemPedido implements Serializable{
 		this.desconto = desconto;
 		this.quantidade = quantidade;
 		this.preco = preco;
+		System.out.println("Print no preco: " + this.preco);
 	}
 
 
@@ -74,20 +74,24 @@ public class ItemPedido implements Serializable{
 		return this.id.getProduto();
 	}
 	
+	public void setProduto(Produto produto) {
+		this.id.setProduto(produto);
+	}
+	
 	@JsonIgnore
 	@Transient
 	public Pedido getPedido() {
 		return this.id.getPedido();
 	}
 	
-	public void setProduto(Produto produto) {
-		this.id.setProduto(produto);
-	}
-	
 	public void setPedido(Pedido pedido) {
 		this.id.setPedido(pedido);
 	}
 	
+	@Transient
+	public Double getSubTotal() {
+		return (this.preco - this.desconto) * this.quantidade;
+	}
 
 	@Override
 	public int hashCode() {
@@ -112,15 +116,6 @@ public class ItemPedido implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	public Double getSubTotal() {
-		return subTotal;
-	}
-
-	public void setSubTotal(Double subTotal) {
-		subTotal = (this.preco - this.desconto) * this.quantidade;
-		this.subTotal = subTotal;
 	}
 	
 	
