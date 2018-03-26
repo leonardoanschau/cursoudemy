@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar --spring.config.location=classpath:application-prod.properties
+web: java -Dserver.port=$PORT -Dspring.profiles.active=prod $JAVA_OPTS -jar target/curso-udemy-0.0.1-SNAPSHOT.jar
