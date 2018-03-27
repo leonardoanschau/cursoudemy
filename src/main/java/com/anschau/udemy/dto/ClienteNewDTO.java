@@ -18,6 +18,7 @@ public class ClienteNewDTO implements Serializable {
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
+	private String senha;
 	
 	private String logradouro;
 	private String numero;
@@ -165,5 +166,14 @@ public class ClienteNewDTO implements Serializable {
 
 	public void setCidadeId(Integer cidadeId) {
 		this.cidadeId = cidadeId;
+	}
+
+	@NotEmpty
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}	
 }
