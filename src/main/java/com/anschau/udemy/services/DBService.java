@@ -20,6 +20,7 @@ import com.anschau.udemy.domain.PagamentoComCartao;
 import com.anschau.udemy.domain.Pedido;
 import com.anschau.udemy.domain.Produto;
 import com.anschau.udemy.domain.enums.EstadoPagamento;
+import com.anschau.udemy.domain.enums.Perfil;
 import com.anschau.udemy.domain.enums.TipoCliente;
 import com.anschau.udemy.repositories.CategoriaRepository;
 import com.anschau.udemy.repositories.CidadeRepository;
@@ -107,17 +108,22 @@ public class DBService {
 		Cliente cliente1 = new Cliente(null, "Maria Silva", "leonardoanschau@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123"));
 		cliente1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 		
+		Cliente cliente2 = new Cliente(null, "Ana Costa", "java.sender.mail@gmail.com", "38351166499", TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123"));
+		cliente2.addPerfil(Perfil.ADMIN);
+		cliente2.getTelefones().addAll(Arrays.asList("8923850", "9123809"));
+		
 		Endereco endereco1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38", cliente1, cidade1);
 		Endereco endereco2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cliente1, cidade2);
-		
+		Endereco endereco3 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "28777012", cliente2, cidade2);
+	
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 		
 		estadoRepository.saveAll(Arrays.asList(estado1, estado2));
 		cidadeRepository.saveAll(Arrays.asList(cidade1, cidade2, cidade3));
 		
-		clienteRepository.save(cliente1);
-		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+		clienteRepository.saveAll(Arrays.asList(cliente1, cliente2));
+		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2, endereco3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm"); 
 		 
