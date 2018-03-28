@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
 
 import com.anschau.udemy.domain.enums.Perfil;
 import com.anschau.udemy.domain.enums.TipoCliente;
@@ -100,7 +103,7 @@ public class Cliente implements Serializable{
 	}
 
 	//@JsonManagedReference
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}

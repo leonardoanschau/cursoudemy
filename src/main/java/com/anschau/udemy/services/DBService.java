@@ -151,6 +151,5 @@ public class DBService {
 		p3.getItens().add(ip2);
 		
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
-		
 	}
 }
