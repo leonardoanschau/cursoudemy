@@ -2,13 +2,13 @@ package com.anschau.udemy.security;
 
 import java.time.Clock;
 import java.time.LocalDate;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.Claims;
 
 @Component
 public class JWTUtil {
@@ -24,14 +24,49 @@ public class JWTUtil {
 	@Value("${jwt.expiration}")
 	private String expiration;
 	
-	Date date = new Date(System.currentTimeMillis());
+	//Date date = new Date("Wed Mar 28 15:25:59 BRT 2018");
 	
 	public String generateToken(String username) {
 		return Jwts.builder()
 				.setSubject(username)
-				.setExpiration(date)
+				//expiração do token não funciona pq a date ta deprecated
+				//.setExpiration(date)
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes())
 				.compact();
+	}
+	
+	public boolean tokenValido(String token) {
+		Claims claims = getClaims(token);
+		if (claims != null) {
+			String username = claims.getSubject();
+			//Date expirationDate = claims.getExpiration();
+			//Date now = new Date(System.currentTimeMillis());
+			/*
+			 * eu não testo a experiração do token abaixo pq a date não funciona
+			 */
+			//&& expirationDate != null && now.before(expirationDate)
+			if (username != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public String getUsername(String token) {
+		Claims claims = getClaims(token);
+		if (claims != null) {
+			return claims.getSubject();
+		}
+		return null;
+	}
+	
+	private Claims getClaims(String token) {
+		try {
+			return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 	
 }

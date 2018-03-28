@@ -16,6 +16,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.anschau.udemy.security.JWTAuthenticationFilter;
+import com.anschau.udemy.security.JWTAuthorizationFilter;
 import com.anschau.udemy.security.JWTUtil;
 
 @Configuration
@@ -35,8 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
 			"/categorias/**",
-			"/pedidos/**",
-			"/clientes/**"
 	};
 	
 	
@@ -49,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), JwtUtil));
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), JwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	

@@ -3,6 +3,7 @@ package com.anschau.udemy.services;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -151,5 +152,7 @@ public class DBService {
 		p3.getItens().add(ip2);
 		
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		Date date = new Date(System.currentTimeMillis());
+		System.out.println("DATA: "+date);
 	}
 }

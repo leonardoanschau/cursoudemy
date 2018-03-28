@@ -18,8 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Cascade;
-
 import com.anschau.udemy.domain.enums.Perfil;
 import com.anschau.udemy.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
