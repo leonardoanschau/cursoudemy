@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.anschau.udemy.domain.Cliente;
 import com.anschau.udemy.domain.ItemPedido;
 import com.anschau.udemy.domain.PagamentoComBoleto;
 import com.anschau.udemy.domain.Pedido;
@@ -14,6 +18,8 @@ import com.anschau.udemy.repositories.ItemPedidoRepository;
 import com.anschau.udemy.repositories.PagamentoRepository;
 import com.anschau.udemy.repositories.PedidoRepository;
 import com.anschau.udemy.repositories.ProdutoRepository;
+import com.anschau.udemy.security.UserSS;
+import com.anschau.udemy.services.exceptions.AuthorizationException;
 import com.anschau.udemy.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -70,5 +76,15 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+	}
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente = clienteService.find(user.getId());
+		return pedidoRepository.findByCliente(cliente, pageRequest);
 	}
 }
