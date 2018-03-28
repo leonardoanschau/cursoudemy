@@ -14,12 +14,15 @@ import org.springframework.stereotype.Service;
 import com.anschau.udemy.domain.Cidade;
 import com.anschau.udemy.domain.Cliente;
 import com.anschau.udemy.domain.Endereco;
+import com.anschau.udemy.domain.enums.Perfil;
 import com.anschau.udemy.domain.enums.TipoCliente;
 import com.anschau.udemy.dto.ClienteDTO;
 import com.anschau.udemy.dto.ClienteNewDTO;
 import com.anschau.udemy.repositories.CidadeRepository;
 import com.anschau.udemy.repositories.ClienteRepository;
 import com.anschau.udemy.repositories.EnderecoRepository;
+import com.anschau.udemy.security.UserSS;
+import com.anschau.udemy.services.exceptions.AuthorizationException;
 import com.anschau.udemy.services.exceptions.DataIntegrityException;
 import com.anschau.udemy.services.exceptions.ObjectNotFoundException;
 
@@ -39,6 +42,13 @@ public class ClienteService {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		
 		Optional<Cliente> obj = clienteRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado!id: " + id + ", Tipo: " + Cliente.class.getName()));
