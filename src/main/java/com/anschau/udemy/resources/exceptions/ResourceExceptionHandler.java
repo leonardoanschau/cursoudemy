@@ -9,6 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.anschau.udemy.services.exceptions.AuthenticationException;
+//import com.anschau.udemy.services.exceptions.AuthenticationException;
 import com.anschau.udemy.services.exceptions.AuthorizationException;
 import com.anschau.udemy.services.exceptions.DataIntegrityException;
 import com.anschau.udemy.services.exceptions.ObjectNotFoundException;
@@ -40,6 +42,13 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
 	}
 
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<StandardError> authentication(AuthenticationException e, HttpServletRequest request) {
+		
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.UNAUTHORIZED.value(), "Acesso negado, usuário não autorizado", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(err);
+	}
+	
 	@ExceptionHandler(AuthorizationException.class)
 	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
 		

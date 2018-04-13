@@ -60,4 +60,11 @@ private AuthenticationManager authenticationManager;
         res.addHeader("access-control-expose-headers", "Authorization");
 	}
 	
+	 @Override
+     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+             AuthenticationException failed) throws AuthenticationException {
+		 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		 
+     }
+	
 }
